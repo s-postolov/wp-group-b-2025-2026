@@ -1,17 +1,34 @@
 package com.example.test.web;
 
+import com.example.test.service.ChefService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.web.IWebExchange;
+import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "ChefListServlet", urlPatterns = "/listChefs")
 public class ChefListServlet extends HttpServlet {
+    private final SpringTemplateEngine springTemplateEngine;
+    private final ChefService chefService;
+
+    public ChefListServlet(SpringTemplateEngine springTemplateEngine, ChefService chefService) {
+        this.springTemplateEngine = springTemplateEngine;
+        this.chefService = chefService;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO implement functionality
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(getServletContext())
+                .buildExchange(request, response);
+
+        WebContext context = new WebContext(webExchange);
+        context.setVariable("chefs", chefService.listChefs());
+        springTemplateEngine.process("listChefs.html", context, response.getWriter());
     }
 }

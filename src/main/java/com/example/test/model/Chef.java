@@ -3,6 +3,7 @@ package com.example.test.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,6 @@ public class Chef {
         this.firstName = firstName;
         this.lastName = lastName;
         this.bio = bio;
-        this.dishes = null;
+        this.dishes = new ArrayList<>();
     }
 }
