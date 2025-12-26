@@ -15,11 +15,23 @@ public class InMemoryDishRepository implements DishRepository {
     }
 
     @Override
-    public Dish findByDishId(String dishId) {
+    public Dish findByDishId(String dishId){
         return DataHolder.dishes.
                 stream().
                 filter(dish -> dish.getDishId().equals(dishId)).
                 findFirst().
                 orElseThrow();
+    }
+
+    @Override
+    public Dish removeDishById(String dishId){
+        Dish dish = DataHolder.dishes.
+                stream().
+                filter(d -> d.getDishId().equals(dishId)).
+                findFirst().
+                orElseThrow();
+
+        DataHolder.dishes.remove(dish);
+        return dish;
     }
 }
