@@ -41,8 +41,13 @@
     <h2 th:text="'Bio: ' + ${chef.getBio()}"></h2>
 
     <h2>Dishes prepared by this chef:</h2>
-    <ul>
-        <li th:each="dish : ${chef.dishes}" th:text="${dish.getName()} + ' ' + ${dish.getCuisine()} + ' ' + ${dish.getPreparationTime()}"></li>
-    </ul>
+    <form th:if="${chef.getDishes()!=null && !chef.getDishes().isEmpty()}" action="/deleteDishFromChef" method="POST">
+        <input type="hidden" name="chefId" th:value="${chef.getId()}" required>
+        <div th:each="dish : ${chef.dishes}">
+            <input type="radio" name="dishId" th:value="${dish.getDishId()}">
+            <span th:text="${dish.getName()} + ' ' + ${dish.getCuisine()} + ' ' + ${dish.getPreparationTime()}"></span>
+        </div>
+        <input type="submit" value="Delete">
+    </form>
 </body>
 </html>

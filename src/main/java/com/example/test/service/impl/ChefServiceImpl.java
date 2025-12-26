@@ -30,12 +30,25 @@ public class ChefServiceImpl implements ChefService{
     }
 
     @Override
-    public Chef addDishToChef(Long chefId, String dishId) {
+    public Chef addDishToChef(Long chefId, String dishId){
         Chef chef = findById(chefId);
         Dish dish = dishRepository.findByDishId(dishId);
 
         if(chef!=null && dish!=null){
             chef.getDishes().add(dish);
+            return chefRepository.save(chef);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Chef removeDishFromChef(Long chefId, String dishId){
+        Chef chef = findById(chefId);
+        Dish dish = dishRepository.findByDishId(dishId);
+
+        if(chef!=null && dish!=null){
+            chef.getDishes().remove(dish);
             return chefRepository.save(chef);
         }
 

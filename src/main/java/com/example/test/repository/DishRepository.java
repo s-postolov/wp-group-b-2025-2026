@@ -8,4 +8,5 @@ public interface DishRepository {
 
     List<Dish> findAll();
     Dish findByDishId(String dishId);
+    Dish removeDishById(String dishId);
 }

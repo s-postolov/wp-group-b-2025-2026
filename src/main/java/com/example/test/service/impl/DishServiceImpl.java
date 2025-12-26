@@ -21,7 +21,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Dish findByDishId(String dishId) {
+    public Dish findByDishId(String dishId){
         return dishRepository.findByDishId(dishId);
     }
 }
